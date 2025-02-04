@@ -1,5 +1,4 @@
-
-dotenv.config();
+import mongoose from 'mongoose'; 
 
 class connectDB {
     static async conectar() {

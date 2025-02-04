@@ -6,22 +6,22 @@ import express from "express";
 // import getSwaggerOptions from "../docs/config/head.js";
 // import logRoutes from "../middlewares/LogRoutesMiddleware.js";
 
-import gastos from './gastosRoutes.js';
+import usuario from './usuarioRotes.js';
 
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const routes = (app) => {
-    app.use(express.json(),
-      gastos,
-    );
+  app.use(express.json(),
+    usuario,
+  );
 
-    app.use((req, res) => {
-        res.status(404).json({ message: "Rota não encontrada" });
-    });
+  app.use((req, res) => {
+    res.status(404).json({ message: "Rota não encontrada" });
+  });
 
-    
+
 };
 
 export default routes;
