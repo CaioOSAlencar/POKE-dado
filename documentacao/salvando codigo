@@ -1,3 +1,29 @@
+/*
+codigo para transformar a imagem em botão
+
+codigo CSS
+
+ button {
+    all: unset; 
+    cursor: pointer; 
+    padding: 0; 
+    border: none; 
+    background: none; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: auto; 
+    height: auto; 
+}
+
+button img {
+    display: block;
+    width: 500px; 
+    height: 500px; 
+}
+
+codigo HTMLL
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,3 +42,5 @@
       </form>
 </body>
 </html>
+
+*/
