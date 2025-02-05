@@ -1,0 +1,46 @@
+/*
+codigo para transformar a imagem em botão
+
+codigo CSS
+
+ button {
+    all: unset; 
+    cursor: pointer; 
+    padding: 0; 
+    border: none; 
+    background: none; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: auto; 
+    height: auto; 
+}
+
+button img {
+    display: block;
+    width: 500px; 
+    height: 500px; 
+}
+
+codigo HTMLL
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+
+        <button type="submit" aria-label="Gerar relatório pdf">
+          <img src="image/test-removebg-preview.png">
+        </button>
+          
+      </form>
+</body>
+</html>
+
+*/
