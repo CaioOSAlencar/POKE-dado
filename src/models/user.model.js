@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 mongoose.set('strictQuery', false);
 
-class Usuarios {
+class Users {
   constructor() {
 
-    const usuarioSchema = new mongoose.Schema({
+    const userSchema = new mongoose.Schema({
       nome: {
         type: String, required: true
       },
@@ -26,9 +26,9 @@ class Usuarios {
       versionKey: false
     });
 
-    usuarioSchema.plugin(mongoosePaginate);
+    userSchema.plugin(mongoosePaginate);
 
-    this.model = mongoose.model('Players', usuarioSchema);
+    this.model = mongoose.model('Players', userSchema);
   }
 }
-export default new Usuarios().model;
+export default new Users().model;

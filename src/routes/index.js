@@ -6,7 +6,7 @@ import express from "express";
 // import getSwaggerOptions from "../docs/config/head.js";
 // import logRoutes from "../middlewares/LogRoutesMiddleware.js";
 
-import usuario from './usuarioRotes.js';
+import user from './userRotes.js';
 
 import dotenv from "dotenv";
 
@@ -14,11 +14,11 @@ dotenv.config();
 
 const routes = (app) => {
   app.use(express.json(),
-    usuario,
+  user,
   );
 
   app.use((req, res) => {
-    res.status(404).json({ message: "Rota não encontrada" });
+    res.status(404).json({ message: "Rote not found" });
   });
 
 
