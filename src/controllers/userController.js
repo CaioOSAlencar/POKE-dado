@@ -1,4 +1,4 @@
-import UserService from '../service/UserService.js';
+import UserService from '../service/userService.js';
 import { commonResponse } from '../utils/commonResponse.js';
 // import { UserSchema } from '../schemas/userSchema.js';
 
