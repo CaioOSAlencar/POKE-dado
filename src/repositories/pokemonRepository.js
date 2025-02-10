@@ -1,37 +1,32 @@
-// essa função é responsavel por estabelecer uma conexão com banco de dados
-import connect from '../config/connect-mongodb-api.js'
+// importa o modelo de pokemon
+import Pokemon from '../models/pokemonModel.js';
 
-// Importando o modelo Pokemon
-import Pokemon from '../models/pokemonModel.js'
-
-
-// Função responsável por buscar um pokemon aleatório no banco de dados
+// função para buscar um pokemon aleatorio no banco de dados
 async function getRandomPokemon() {
+  try {
+      // conta o numero total de pokemon na coleção do banco
+      const totalPokemon = await Pokemon.countDocuments();
+      if (totalPokemon === 0) {
+          throw new Error("A coleção 'pokemon' está vazia.");
+      }
 
-    // aguarda a conexão com banco de dados
-    const db = await connect()
+      // gera um indece aleatorio com base no numero total de pokemon
+      const randomIndex = Math.floor(Math.random() * totalPokemon);
+      console.log(`Índice aleatório gerado: ${randomIndex}`);
 
-    // acessa a coleção pokemon no banco de dados
-    const pokemonCollection = db.collection('pokemon')
+      // busca um pokemon aleatorio na coleção, pulando os primeiros 'randomIndex'
+      const randomPokemon = await Pokemon.findOne().skip(randomIndex);
+      console.log('Pokémon aleatório encontrado:', randomPokemon);
 
-    // conta quantatidade de documentos na coleção
-    const totalPokemon = await pokemonCollection.countDocuments()//retorna quantidade de documentos de pokemon
-
-    // gera um indice aleatorio com base na quantiade total de documentos
-    // math.random gera numero entre 0 e 1
-    // usando Math.floor obtemos um indece valido
-    const randomIndex = Math.floor(Math.random() * totalPokemon)
-
-    // vai buscar um pokemon aleatorio na coleção
-    // findOne retorna apenas um documento que vai corresponder com a consulta
-    // skip vai pular os primeiros documentos randoIndex
-    const randomPokemon = await pokemonCollection.findOne({}, { skip: randomIndex})
-
-    // vai retorna o pokemon aleatorio encontrado
-    return randomPokemon
+      // retorna o pokemon aleatorio encontrado
+      return randomPokemon;
+  } catch (error) {
+      // caso acontecer um erro, exibe uma mensagem detalhado
+      console.error('Erro no repositório:', error.message, error.stack);
+      throw error; 
+  }
 }
 
-// Exporta a função getRandomPokemon para que seaja usada em outras partes
 export default {
     getRandomPokemon
-}
+};
