@@ -1,6 +1,6 @@
-import LoginService from '../services/loginService.js';
-import { CommonResponse} from '../utils/commonResponse.js';
-import { LoginSchema } from '../utils/validators/schemas/zod/LoginSchema.js';
+import LoginService from '../service/loginService.js';
+import CommonResponse from '../utils/commonResponse.js';
+// import { LoginSchema } from '../utils/validators/schemas/zod/LoginSchema.js';
 
 /**
   * Validação nesta aplicação segue o segue este artigo:

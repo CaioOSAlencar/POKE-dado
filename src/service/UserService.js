@@ -5,7 +5,7 @@ class UserService {
     this.repository = new UserRepository(); 
   }
   async get_all_users(req) {
-    const data = await this.repository.listar(req);
+    const data = await this.repository.get_users(req);
     
     if (!data.docs.length) {
       throw new Error('No users found');

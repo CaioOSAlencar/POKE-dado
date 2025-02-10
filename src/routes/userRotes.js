@@ -11,7 +11,7 @@ const loginController = new LoginController();
 // const revokeController = new RevokeController();
 
 router
-  .post("/login", asyncWrapper(loginController.logar.bind(LoginController)))
+  .post("/login", loginController.logar.bind(LoginController))
   // .post("/token", asyncWrapper(tokenController.token.bind(TokenController)))
   // .post("/logout", AuthMiddleware, asyncWrapper(logoutController.logout.bind(LogoutController)))
   // .post("/revoke", AuthMiddleware, asyncWrapper(revokeController.revoke.bind(RevokeController)))
