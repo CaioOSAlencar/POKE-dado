@@ -15,6 +15,26 @@ class UserController {
       res.status(500).json({ msg: error.message });
     }
   }
+
+  async registerUser(req, res) {
+    try {
+      const { nome, email, senha, mestre, N_SORTE } = req.body;
+      const data = await this.service.registerUser(nome, email, senha, mestre, N_SORTE);
+      return res.status(201).json(data);
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  }
+
+  async authenticateUser(req, res) {
+    try {
+      const { nome, senha } = req.body;
+      const data = await this.service.authenticateUser(nome, senha);
+      return res.status(200).json(data);
+    } catch (error) {
+      res.status(401).json({ msg: error.message });
+    }
+  }
 }
 
 export default UserController;

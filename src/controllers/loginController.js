@@ -11,16 +11,22 @@ class LoginController {
   }
 
   logar = async (req, res) => {
-    console.log('Estou no logar em LoginController, enviando req para loginService');
+    try {
+      console.log('Estou no logar em LoginController, enviando req para loginService');
 
-    // 1º validação estrutural - validar os campos passados por body
-    const body = req.body || {};
-    
-    const validatedBody = LoginSchema.parse(body);
+      // 1º validação estrutural - validar os campos passados por body
+      const body = req.body || {};
+      
+      console.log('body', body);
+      
+      // const validatedBody = LoginSchema.parse(body);
 
-    const data = await this.service.logar(validatedBody);
+      const data = await this.service.logar(body);
 
-    return CommonResponse.success(res, data);
+      return CommonResponse.success(res, data);
+    } catch (error) {
+      return CommonResponse.error(res, error);
+    }
   }
 }
 

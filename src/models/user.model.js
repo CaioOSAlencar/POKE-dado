@@ -9,9 +9,6 @@ class Users {
       nome: {
         type: String, required: true
       },
-      email: {
-        type: String, required: true
-      },
       senha: {
         type: String, required: true
       },
@@ -20,6 +17,14 @@ class Users {
       },
       N_SORTE: {
         type: Number, required: true
+      },
+      accesstoken: {
+        type: String,
+        required: false
+      },
+      refreshtoken: {
+        type: String,
+        required: false
       }
     },
     {

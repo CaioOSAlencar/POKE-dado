@@ -11,6 +11,16 @@ export const commonResponse = {
       message: 'Item deletado com sucesso',
       item,
     }),
+    success: (res, data) => {
+      res.status(200).json({ success: true, data });
+    },
+    error: (res, error) => {
+      res.status(error.statusCode || 500).json({
+        success: false,
+        message: error.customMessage || 'An error occurred',
+        details: error.details || [],
+      });
+    }
   };
 
 class CustomError extends Error {
@@ -26,17 +36,17 @@ class CustomError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-;
 
-const CommonResponse2 = {
-  success: (res, data) => {
-    res.status(200).json({ success: true, data });
-  },
-  error: (res, message) => {
-    res.status(500).json({ success: false, message });
+class CommonResponse {
+  static error(res, error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message || 'An error occurred',
+      error: error
+    });
   }
-};
+}
 
 export default commonResponse;
 
-export { CustomError, CommonResponse2 };
+export { CustomError, CommonResponse };

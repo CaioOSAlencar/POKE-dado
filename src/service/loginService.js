@@ -9,52 +9,72 @@ class LoginService {
     }
 
     async logar(body) {
-        console.log('Estou no logar em LoginService');
+        try {
+            console.log('Estou no logar em LoginService');
 
-        // Buscar usuário no banco de dados
-        const userEncontrado = await this.repository.buscarPorEmail(body.email);
+            // Buscar usuário no banco de dados
+            const userEncontrado = await this.repository.buscarApelido(body.nome);
+            if (!userEncontrado) {
+                throw {
+                    statusCode: 404,
+                    errorType: 'notFound',
+                    field: 'Nome',
+                    details: [],
+                    customMessage: 'Usuário não encontrado'
+                };
+            }
 
-        // Validar a senha
-        const senhaValida = await bcrypt.compare(body.senha, userEncontrado.senha);
+            // Validar a senha
+            const senhaValida = await bcrypt.compare(body.senha, userEncontrado.senha);
 
-        // retornar erro se a senha não for válida
-        if (!senhaValida) {
+            // retornar erro se a senha não for válida
+            if (!senhaValida) {
+                throw {
+                    statusCode: 401,
+                    errorType: 'unauthorized',
+                    field: 'Senha',
+                    details: [],
+                    customMessage: 'Senha não autorizada'
+                };
+            }
+
+            // Gerar tokens
+            // const refreshtoken = jwt.sign(
+            //     {
+            //         id: userEncontrado._id,
+            //         nome: userEncontrado.nome,
+            //         // Adicione outros campos necessários, mas evite dados sensíveis
+            //     },
+            //     process.env.JWT_SECRET,
+            //     { expiresIn: process.env.JWT_EXPIRATION_REFRESH_TOKEN }
+            // );
+
+            // const accesstoken = jwt.sign(
+            //     {
+            //         id: userEncontrado._id,
+            //         email: userEncontrado.email,
+            //         // Adicione outros campos necessários, mas evite dados sensíveis
+            //     },
+            //     process.env.JWT_SECRET,
+            //     { expiresIn: process.env.JWT_EXPIRATION_ACESS_TOKEN }
+            // );
+
+            // await this.repository.atualizar(userEncontrado._id, { refreshtoken: refreshtoken });
+            
+            // userEncontrado.senha = undefined;
+            // userEncontrado.refreshtoken = undefined;
+
+            // return { refreshtoken, accesstoken, user: userEncontrado };
+        } catch (error) {
+            console.error('Erro no logar em LoginService:', error);
             throw {
-                statusCode: 401,
-                errorType: 'unauthorized',
-                field: 'Senha',
-                details: [],
-                customMessage: 'Senha não autorizada'
+                statusCode: error.statusCode || 500,
+                errorType: error.errorType || 'internalServerError',
+                field: error.field || 'Service',
+                details: [error.message],
+                customMessage: error.customMessage || 'Erro ao realizar login'
             };
         }
-
-        // Gerar tokens
-        const refreshtoken = jwt.sign(
-            {
-                id: userEncontrado._id,
-                email: userEncontrado.email,
-                // Adicione outros campos necessários, mas evite dados sensíveis
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRATION_REFRESH_TOKEN }
-        );
-
-        const accesstoken = jwt.sign(
-            {
-                id: userEncontrado._id,
-                email: userEncontrado.email,
-                // Adicione outros campos necessários, mas evite dados sensíveis
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRATION_ACESS_TOKEN }
-        );
-
-        await this.repository.atualizar(userEncontrado._id, { refreshtoken: refreshtoken });
-        
-        userEncontrado.senha = undefined;
-        userEncontrado.refreshtoken = undefined;
-
-        return { refreshtoken, accesstoken, user: userEncontrado };
     }
 
     async token(token) {
