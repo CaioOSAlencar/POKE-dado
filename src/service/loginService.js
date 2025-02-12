@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
-import LoginRepository from '../repositories/LoginRepository.js';
+import LoginRepository from '../repositories/loginRepository.js';
 
 class LoginService {
     constructor() {
