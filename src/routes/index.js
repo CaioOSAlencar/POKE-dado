@@ -1,25 +1,26 @@
 import express from "express";
-import dotenv from "dotenv";
+// import swaggerJsDoc from "swagger-jsdoc";
+// import swaggerUI from "swagger-ui-express";
+// import getSwaggerOptions from "../docs/config/head.js";
+// import logRoutes from "../middlewares/LogRoutesMiddleware.js";
 
-// importa os roteadores de usuario
-import usuarioRouter from './usuarioRotes.js';
-import pokemonRouter from './pokemonRouter.js'; 
+import user from './userRotes.js';
+import pokemon from './pokemonRouter.js';
+
+import dotenv from "dotenv";
 
 // carrega as variaveis de ambiente do arquivo .env
 dotenv.config();
 
 // função para configirar as rotas do servidor
 const routes = (app) => {
-  // habilita o uso de JSON nas requisiçoes
-  app.use(express.json());
+  app.use(express.json(),
+  user,
+  pokemon
+  );
 
-  // define as rotas para usuario e pokemon
-  app.use('/usuario', usuarioRouter);  
-  app.use('/pokemon', pokemonRouter); 
-
-  // rota padrão para lidar com rotas não encontradas
   app.use((req, res) => {
-    res.status(404).json({ message: "Rota não encontrada" });
+    res.status(404).json({ message: "Rote not found" });
   });
 };
 

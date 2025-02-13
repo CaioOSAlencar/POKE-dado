@@ -2,14 +2,11 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 mongoose.set('strictQuery', false);
 
-class Usuarios {
+class Users {
   constructor() {
 
-    const usuarioSchema = new mongoose.Schema({
+    const userSchema = new mongoose.Schema({
       nome: {
-        type: String, required: true
-      },
-      email: {
         type: String, required: true
       },
       senha: {
@@ -20,15 +17,23 @@ class Usuarios {
       },
       N_SORTE: {
         type: Number, required: true
+      },
+      accesstoken: {
+        type: String,
+        required: false
+      },
+      refreshtoken: {
+        type: String,
+        required: false
       }
     },
     {
       versionKey: false
     });
 
-    usuarioSchema.plugin(mongoosePaginate);
+    userSchema.plugin(mongoosePaginate);
 
-    this.model = mongoose.model('Players', usuarioSchema);
+    this.model = mongoose.model('Players', userSchema);
   }
 }
-export default new Usuarios().model;
+export default new Users().model;

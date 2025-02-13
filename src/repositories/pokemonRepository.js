@@ -7,7 +7,7 @@ async function getRandomPokemon() {
       // conta o numero total de pokemon na coleção do banco
       const totalPokemon = await Pokemon.countDocuments();
       if (totalPokemon === 0) {
-          throw new Error("A coleção 'pokemon' está vazia.");
+          return null;
       }
 
       // gera um indece aleatorio com base no numero total de pokemon

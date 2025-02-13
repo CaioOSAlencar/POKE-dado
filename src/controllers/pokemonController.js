@@ -7,6 +7,11 @@ async function getRandomPokemon(req, res) {
         // chama o serviço para buscar um pokemon aleatorio
         const randomPokemon = await pokemonService.getRandomPokemon();
         
+        // verifica se a coleção está vazia
+        if (!randomPokemon) {
+            return res.status(404).json({ error: "A coleção 'Pokemon' está vazia." });
+        }
+
         // retorna o pokemon encontrado como resposta em formato JSON
         res.json(randomPokemon);
     } catch (error) {
