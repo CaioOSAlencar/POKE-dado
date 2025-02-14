@@ -1,25 +1,26 @@
-// importe o serviço de pokemon
+// Controller para Pokémon
 import pokemonService from '../service/pokemonService.js';
 
-// função para buscar um pokemon aleatorio
+// Função para buscar um Pokémon aleatório baseado em raridade
 async function getRandomPokemon(req, res) {
-    try {
-        // chama o serviço para buscar um pokemon aleatorio
-        const randomPokemon = await pokemonService.getRandomPokemon();
-        
-        // verifica se a coleção está vazia
-        if (!randomPokemon) {
-            return res.status(404).json({ error: "A coleção 'Pokemon' está vazia." });
-        }
+  try {
+    // Chama o serviço para obter o Pokémon aleatório
+    const randomPokemon = await pokemonService.getRandomPokemonByRarity();
 
-        // retorna o pokemon encontrado como resposta em formato JSON
-        res.json(randomPokemon);
-    } catch (error) {
-        // caso acontecer um erro, exibe uma mensagem detalhado
-        res.status(500).json({ error: "Erro ao buscar Pokémon aleatório" });
+    // Verifica se não encontrou nenhum Pokémon
+    if (!randomPokemon) {
+      return res.status(404).json({ error: "Nenhum Pokémon encontrado." });
     }
+
+    // Retorna o Pokémon encontrado em formato JSON
+    res.json(randomPokemon);
+  } catch (error) {
+    // Retorna um erro detalhado, caso ocorra
+    console.error("Erro no Controller:", error.message);
+    res.status(500).json({ error: "Erro ao buscar Pokémon aleatório." });
+  }
 }
 
 export default {
-    getRandomPokemon
+  getRandomPokemon
 };
