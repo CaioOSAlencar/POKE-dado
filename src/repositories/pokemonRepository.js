@@ -1,32 +1,47 @@
-// importa o modelo de pokemon
 import Pokemon from '../models/pokemonModel.js';
 
-// função para buscar um pokemon aleatorio no banco de dados
-async function getRandomPokemon() {
+// Função auxiliar para sortear uma raridade com base nas porcentagens definidas
+function sortearRaridade() {
+  const sorteio = Math.random() * 100;
+  if (sorteio < 50) return 'muito comum';
+  if (sorteio < 75) return 'comum';
+  if (sorteio < 90) return 'incomum';
+  if (sorteio < 97) return 'raro';
+  if (sorteio < 99) return 'muito raro';
+  return 'especial'; // Para Místico ou Lendário (re-roleta)
+}
+
+// Função para buscar um Pokémon aleatório baseado na raridade sorteada
+async function getRandomPokemonByRarity() {
   try {
-      // conta o numero total de pokemon na coleção do banco
-      const totalPokemon = await Pokemon.countDocuments();
-      if (totalPokemon === 0) {
-          return null;
-      }
+    // Sorteia a raridade inicial
+    let raridade = sortearRaridade();
 
-      // gera um indece aleatorio com base no numero total de pokemon
-      const randomIndex = Math.floor(Math.random() * totalPokemon);
-      console.log(`Índice aleatório gerado: ${randomIndex}`);
+    // Se a raridade for 'especial', faz um novo sorteio para decidir entre Místico e Lendário
+    if (raridade === 'especial') {
+      raridade = Math.random() < 0.7 ? 'místico' : 'lendário';
+    }
 
-      // busca um pokemon aleatorio na coleção, pulando os primeiros 'randomIndex'
-      const randomPokemon = await Pokemon.findOne().skip(randomIndex);
-      console.log('Pokémon aleatório encontrado:', randomPokemon);
+    console.log(`Raridade sorteada: ${raridade}`);
 
-      // retorna o pokemon aleatorio encontrado
-      return randomPokemon;
+    // Busca a quantidade total de Pokémon da raridade sorteada
+    const totalPokemon = await Pokemon.countDocuments({ raridade });
+    if (totalPokemon === 0) {
+      throw new Error(`Nenhum Pokémon encontrado para a raridade: ${raridade}`);
+    }
+
+    // Gera um índice aleatório para buscar o Pokémon correspondente
+    const randomIndex = Math.floor(Math.random() * totalPokemon);
+    const randomPokemon = await Pokemon.findOne({ raridade }).skip(randomIndex);
+
+    console.log('Pokémon aleatório encontrado:', randomPokemon);
+    return randomPokemon;
   } catch (error) {
-      // caso acontecer um erro, exibe uma mensagem detalhado
-      console.error('Erro no repositório:', error.message, error.stack);
-      throw error; 
+    console.error('Erro no Repository:', error.message);
+    throw error;
   }
 }
 
 export default {
-    getRandomPokemon
+  getRandomPokemonByRarity
 };
