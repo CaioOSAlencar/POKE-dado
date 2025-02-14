@@ -3,12 +3,13 @@ import Pokemon from '../models/pokemonModel.js';
 // Função auxiliar para sortear uma raridade com base nas porcentagens definidas
 function sortearRaridade() {
   const sorteio = Math.random() * 100;
-  if (sorteio < 50) return 'muito comum';
-  if (sorteio < 75) return 'comum';
-  if (sorteio < 90) return 'incomum';
-  if (sorteio < 97) return 'raro';
-  if (sorteio < 99) return 'muito raro';
-  return 'especial'; // Para Místico ou Lendário (re-roleta)
+  if (sorteio < 40) return 'muito comum'; // 40%
+  if (sorteio < 70) return 'comum';      // 30%
+  if (sorteio < 85) return 'incomum';    // 15%
+  if (sorteio < 92) return 'raro';       // 7%
+  if (sorteio < 97) return 'muito raro'; // 5%
+  if (sorteio < 99) return 'místico';    // 2%
+  return 'lendário';                     // 1%
 }
 
 // Função para buscar um Pokémon aleatório baseado na raridade sorteada
@@ -16,11 +17,6 @@ async function getRandomPokemonByRarity() {
   try {
     // Sorteia a raridade inicial
     let raridade = sortearRaridade();
-
-    // Se a raridade for 'especial', faz um novo sorteio para decidir entre Místico e Lendário
-    if (raridade === 'especial') {
-      raridade = Math.random() < 0.7 ? 'místico' : 'lendário';
-    }
 
     console.log(`Raridade sorteada: ${raridade}`);
 
@@ -41,6 +37,22 @@ async function getRandomPokemonByRarity() {
     throw error;
   }
 }
+
+//esse codigo é apagavel
+async function rodarAteRaridadeDesejada(raridadeDesejada) {
+    let pokemon;
+    do {
+      pokemon = await getRandomPokemonByRarity();
+    } while (pokemon.raridade !== raridadeDesejada);
+  
+    console.log(`🎉 Pokémon com a raridade desejada (${raridadeDesejada}) encontrado:`, pokemon);
+    return pokemon;
+  }
+  
+  // Exemplo de uso: rodar até encontrar um Pokémon "muito raro"
+  rodarAteRaridadeDesejada('lendário')
+    .then(() => console.log('Busca finalizada!'))
+    .catch((err) => console.error('Erro durante a busca:', err));
 
 export default {
   getRandomPokemonByRarity
