@@ -15,13 +15,12 @@ class UserService {
     return data;
   }
 
-  async registerUser(nome, email, senha, mestre, N_SORTE) {
+  async registerUser(nome, senha, mestre, N_SORTE) {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
     const newUser = {
       nome,
-      email,
       senha: hashedPassword,
       mestre,
       N_SORTE

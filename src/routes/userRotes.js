@@ -12,9 +12,9 @@ const loginController = new LoginController();
 
 router
   .post("/login", loginController.logar.bind(LoginController))
-  // .post("/token", asyncWrapper(tokenController.token.bind(TokenController)))
-  // .post("/logout", AuthMiddleware, asyncWrapper(logoutController.logout.bind(LogoutController)))
-  // .post("/revoke", AuthMiddleware, asyncWrapper(revokeController.revoke.bind(RevokeController)))
+  // .post("/token", tokenController.token.bind(TokenController))
+  // .post("/logout", logoutController.logout.bind(LogoutController))
+  // .post("/revoke", revokeController.revoke.bind(RevokeController))
   .get("/users", userController.get_all_users.bind(userController))
   .post("/register", userController.registerUser.bind(userController))
   .post("/authenticate", userController.authenticateUser.bind(userController));
