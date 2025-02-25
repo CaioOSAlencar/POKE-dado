@@ -1,4 +1,5 @@
 import Pokemon from '../models/pokemonModel.js';
+import Player from '../models/playerModel.js';
 
 // Função auxiliar para sortear uma raridade com base nas porcentagens definidas
 function sortearRaridade() {
@@ -12,12 +13,11 @@ function sortearRaridade() {
   return 'lendário';                     // 1%
 }
 
-// Função para buscar um Pokémon aleatório baseado na raridade sorteada
-async function getRandomPokemonByRarity() {
+// Função para buscar um Pokémon aleatório baseado na raridade sorteada e verificar se é shiny
+async function getRandomPokemonByRarity(playerId) {
   try {
     // Sorteia a raridade inicial
     let raridade = sortearRaridade();
-
     console.log(`Raridade sorteada: ${raridade}`);
 
     // Busca a quantidade total de Pokémon da raridade sorteada
@@ -30,29 +30,25 @@ async function getRandomPokemonByRarity() {
     const randomIndex = Math.floor(Math.random() * totalPokemon);
     const randomPokemon = await Pokemon.findOne({ raridade }).skip(randomIndex);
 
-    console.log('Pokémon aleatório encontrado:', randomPokemon);
-    return randomPokemon;
+    // Busca o número da sorte do jogador
+    const player = await Player.findById(playerId);
+    if (!player) {
+      throw new Error('Jogador não encontrado');
+    }
+
+    // Sorteia um número de 1 a 100 para determinar se o Pokémon é shiny
+    const numeroSorteado = Math.floor(Math.random() * 100) + 1;
+    const isShiny = numeroSorteado === player.n_sorte;
+
+    console.log(`Número sorteado: ${numeroSorteado} | Número da sorte do jogador: ${player.n_sorte} | Shiny: ${isShiny}`);
+    
+    // Retorna o Pokémon com o status de shiny
+    return { ...randomPokemon.toObject(), shiny: isShiny };
   } catch (error) {
     console.error('Erro no Repository:', error.message);
     throw error;
   }
 }
-
-//esse codigo é apagavel
-async function rodarAteRaridadeDesejada(raridadeDesejada) {
-    let pokemon;
-    do {
-      pokemon = await getRandomPokemonByRarity();
-    } while (pokemon.raridade !== raridadeDesejada);
-  
-    console.log(`🎉 Pokémon com a raridade desejada (${raridadeDesejada}) encontrado:`, pokemon);
-    return pokemon;
-  }
-  
-  // Exemplo de uso: rodar até encontrar um Pokémon "muito raro"
-  rodarAteRaridadeDesejada('lendário')
-    .then(() => console.log('Busca finalizada!'))
-    .catch((err) => console.error('Erro durante a busca:', err));
 
 export default {
   getRandomPokemonByRarity
