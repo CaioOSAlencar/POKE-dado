@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import PermissionService from '../services/PermissionService.js';
-import Rota from '../models/Rota.js';
+// import PermissionService from '../services/PermissionService.js';
 
 // Certifique-se de que as variáveis de ambiente estejam carregadas
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -8,8 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 class AuthPermission {
   constructor() {
     this.jwt = jwt;
-    this.permissionService = new PermissionService();
-    this.Rota = Rota;
+    // this.permissionService = new PermissionService();
+    // this.Rota = Rota;
     this.JWT_SECRET = JWT_SECRET;
     
     this.handle = this.handle.bind(this);

@@ -6,6 +6,7 @@ import express from "express";
 
 import user from './userRotes.js';
 import pokemon from './pokemonRouter.js';
+import authRoute from './authRoutes.js';
 
 import dotenv from "dotenv";
 
@@ -16,7 +17,8 @@ dotenv.config();
 const routes = (app) => {
   app.use(express.json(),
   user,
-  pokemon
+  pokemon,
+  authRoute
   );
 
   app.use((req, res) => {
