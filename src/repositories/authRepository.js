@@ -11,10 +11,10 @@ class LoginRepository {
   /**
    * Buscar usuário por email e, opcionalmente, por um ID diferente.
    */
-  async buscarApelido(nome, idIgnorado = null) {
+  async buscarApelido(apelido, idIgnorado = null) {
     try {
       // Criar o filtro base
-      const filtro = { nome };
+      const filtro = { apelido };
 
       // Adicionar a condição para excluir o ID, se fornecido
       if (idIgnorado) {
@@ -71,6 +71,29 @@ class LoginRepository {
         field: 'Database',
         details: [error.message],
         customMessage: 'Erro ao buscar usuário por ID no banco de dados'
+      });
+    }
+  }
+  async atualizar(id, dadosAtualizados) {
+    try {
+      const usuarioAtualizado = await this.model.findByIdAndUpdate(id, dadosAtualizados, { new: true }).exec();
+      if (!usuarioAtualizado) {
+        throw new CustomError({
+          statusCode: 404,
+          errorType: 'resourceNotFound',
+          field: 'Usuário',
+          details: [],
+          customMessage: messages.error.resourceNotFound('Usuário')
+        });
+      }
+      return usuarioAtualizado;
+    } catch (error) {
+      throw new CustomError({
+        statusCode: 500,
+        errorType: 'internalServerError',
+        field: 'Database',
+        details: [error.message],
+        customMessage: 'Erro ao atualizar usuário no banco de dados'
       });
     }
   }
