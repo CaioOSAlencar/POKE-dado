@@ -68,8 +68,12 @@ class UserRepository {
     return await newUser.save();
   }
 
-  async findUserByName(nome) {
-    return await this.model.findOne({ nome });
+  async deleteUser(apelido) {
+    const result = await this.model.findOneAndDelete({ apelido });
+    if (!result) {
+      throw new Error('Usuário não encontrado');
+    }
+    return result;
   }
 }
 

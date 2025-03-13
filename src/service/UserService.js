@@ -15,33 +15,24 @@ class UserService {
     return data;
   }
 
-  async registerUser(nome, email, senha, mestre, N_SORTE) {
+  async registerUser(apelido, senha, n_sorte, role = null, mesa_id = null) {
+    console.log('Senha recebida:', senha);
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
     const newUser = {
-      nome,
-      email,
+      apelido,
       senha: hashedPassword,
-      mestre,
-      N_SORTE
+      role,
+      n_sorte,
+      mesa_id
     };
 
     return await this.repository.createUser(newUser);
   }
 
-  async authenticateUser(nome, senha) {
-    const user = await this.repository.findUserByName(nome);
-    if (!user) {
-      throw new Error('Usuário não encontrado');
-    }
-
-    const isPasswordValid = await bcrypt.compare(senha, user.senha);
-    if (!isPasswordValid) {
-      throw new Error('Senha não autorizada');
-    }
-
-    // ...gerar e retornar JWT...
+  async deleteUser(apelido) {
+    return await this.repository.deleteUser(apelido);
   }
 }
 
