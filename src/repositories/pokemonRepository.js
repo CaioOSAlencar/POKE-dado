@@ -1,5 +1,5 @@
 import Pokemon from '../models/pokemonModel.js';
-import Player from '../models/playerModel.js';
+import Players from '../models/user.model.js';
 
 // Função auxiliar para sortear uma raridade com base nas porcentagens definidas
 function sortearRaridade() {
@@ -22,16 +22,22 @@ async function getRandomPokemonByRarity(playerId) {
 
     // Busca a quantidade total de Pokémon da raridade sorteada
     const totalPokemon = await Pokemon.countDocuments({ raridade });
+    console.log(`Total de Pokémon encontrados: ${totalPokemon}`);
+    
     if (totalPokemon === 0) {
       throw new Error(`Nenhum Pokémon encontrado para a raridade: ${raridade}`);
     }
 
     // Gera um índice aleatório para buscar o Pokémon correspondente
     const randomIndex = Math.floor(Math.random() * totalPokemon);
+    console.log(`Index dos Pokémon encontrados: ${randomIndex}`);
     const randomPokemon = await Pokemon.findOne({ raridade }).skip(randomIndex);
-
+    console.log(`randomPokemon encontrados: ${randomPokemon}`);
     // Busca o número da sorte do jogador
-    const player = await Player.findById(playerId);
+    const player = await Players.findById(playerId);
+    console.log(`player encontrados: ${player}`);
+    
+    
     if (!player) {
       throw new Error('Jogador não encontrado');
     }
