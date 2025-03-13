@@ -6,11 +6,11 @@ class UserService {
     this.repository = new UserRepository(); 
   }
 
-  async get_all_users(req) {
-    const data = await this.repository.get_users(req);
-    
-    if (!data.docs.length) {
-      throw new Error('No users found');
+  async get_all_users(req, page = 1) {
+    const limit = 10;
+    const data = await this.repository.get_users(req, page, limit);
+    if (!data) {
+      return null;
     }
     return data;
   }

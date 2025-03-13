@@ -8,8 +8,11 @@ class UserController {
   }
   async get_all_users(req, res) {
     try {
-      const data = await this.service.get_all_users(req);
-
+      const { page = 1 } = req.query;
+      const data = await this.service.get_all_users(req, page);
+      if (!data) {
+        return res.status(404).json({ msg: 'No users found', code: 404 });
+      }
       return res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ msg: error.message });

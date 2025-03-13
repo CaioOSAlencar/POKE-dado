@@ -8,27 +8,43 @@ class UserRepository {
   }
 
   /**
-   * @get_users If ID is passed, returns a specific user, otherwise returns all users
+   * @get_users If ID or apelido is passed, returns a specific user, otherwise returns all users
    */
-  async get_users(data) {
+  async get_users(data, page = 1, limit = 10) {
     const id = data.params.id || null;
+    const apelido = data.query.apelido || null;
+    const n_sorte = data.query.n_sorte || null;
+    console.log('ID:', id);
+    console.log('Apelido:', apelido);
+    console.log('N_sorte:', n_sorte);
+    console.log('Page:', page);
+    
+    if (!data) { return null; }
+
+    const selectFields = '_id apelido n_sorte role mesa_id historico_rolls';
 
     if (id) {
-      const data = await this.model.findById(id);
-      if (!data) { throw new Error('No users found'); }
-
-      return data;
+      const user = await this.model.findById(id).select(selectFields);
+      return user || null;
     }
 
-    const { page = 1, limit = 10 } = data.query;
+    if (apelido) {
+      const user = await this.model.findOne({ apelido }).select(selectFields);
+      return user || null;
+    }
+    if (n_sorte) {
+      const user = await this.model.findOne({ n_sorte }).select(selectFields);
+      return user || null;
+    }
+
     const options = {
       page: parseInt(page, 10),
-      limit: parseInt(limit, 10),
+      limit: 10, // Fixed limit
+      select: selectFields
     };
 
     const resultado = await this.model.paginate({}, options);
-
-    return resultado;
+    return resultado.docs.length ? resultado : null;
   }
 
   /**
