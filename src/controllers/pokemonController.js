@@ -4,8 +4,11 @@ import pokemonService from '../service/pokemonService.js';
 // Função para buscar um Pokémon aleatório baseado em raridade
 async function getRandomPokemon(req, res) {
   try {
+
+    const body = req.body.playerId || {};
+    console.log('body', body);
     // Chama o serviço para obter o Pokémon aleatório
-    const randomPokemon = await pokemonService.getRandomPokemonByRarity();
+    const randomPokemon = await pokemonService.getRandomPokemonByRarity(body);
 
     // Verifica se não encontrou nenhum Pokémon
     if (!randomPokemon) {
