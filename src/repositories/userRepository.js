@@ -14,9 +14,11 @@ class UserRepository {
     const id = data.params.id || null;
     const apelido = data.query.apelido || null;
     const n_sorte = data.query.n_sorte || null;
+    const role = data.query.role || null;
     console.log('ID:', id);
     console.log('Apelido:', apelido);
     console.log('N_sorte:', n_sorte);
+    console.log('Role:', role);
     console.log('Page:', page);
     
     if (!data) { return null; }
@@ -33,7 +35,11 @@ class UserRepository {
       return user || null;
     }
     if (n_sorte) {
-      const user = await this.model.findOne({ n_sorte }).select(selectFields);
+      const user = await this.model.find({ n_sorte }).select(selectFields);
+      return user || null;
+    }
+    if (role) {
+      const user = await this.model.find({ role }).select(selectFields);
       return user || null;
     }
 

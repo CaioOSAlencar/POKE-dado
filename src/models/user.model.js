@@ -12,6 +12,7 @@ class Users {
       n_sorte: { type: Number, required: true }, // .refine(N_SORTE => parseInt(N_SORTE) >0 && parseInt(N_SORTE) < 101, "Escolha um número entre 1 e 100"),   <--- Zod
       role: { type: String, required: false },
       mesa_id: { type: Number, required: false },
+      historico_rolls:{ type: [Number], required: false },
       accesstoken: { type: String, required: false },
       refreshtoken: { type: String, required: false }
     }, { 

@@ -15,7 +15,7 @@ class UserService {
     return data;
   }
 
-  async registerUser(apelido, senha, n_sorte, role = null, mesa_id = null) {
+  async registerUser(apelido, senha, n_sorte, role = null, mesa_id = null, historico_rolls=null) {
     console.log('Senha recebida:', senha);
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(senha, saltRounds);
@@ -25,7 +25,8 @@ class UserService {
       senha: hashedPassword,
       role,
       n_sorte,
-      mesa_id
+      mesa_id,
+      historico_rolls
     };
 
     return await this.repository.createUser(newUser);

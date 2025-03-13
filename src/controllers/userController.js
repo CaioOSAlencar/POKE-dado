@@ -21,7 +21,7 @@ class UserController {
 
   async registerUser(req, res) {
     try {
-      const { apelido, senha, n_sorte, role, mesa_id } = req.body;
+      const { apelido, senha, n_sorte, role, mesa_id, historico_rolls } = req.body;
       console.log('Senha recebida:', senha);
       if (!apelido || !senha || !n_sorte) {
         return res.status(400).json({ msg: 'Campos obrigatórios faltando' });
@@ -30,7 +30,7 @@ class UserController {
         return res.status(400).json({ msg: 'A senha deve ter pelo menos 8 caracteres' });
       }
 
-      const data = await this.service.registerUser(apelido, senha, n_sorte, role, mesa_id);
+      const data = await this.service.registerUser(apelido, senha, n_sorte, role, mesa_id, historico_rolls);
       return res.status(201).json(data);
     } catch (error) {
       if (error.code === 11000) {

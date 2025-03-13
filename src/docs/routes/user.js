@@ -32,6 +32,14 @@ const usuarioRoutes = {
           }
         },
         {
+          name: "role",
+          in: "query",
+          description: "Categoria do usuário.",
+          schema: {
+            type: "string"
+          }
+        },
+        {
           name: "page",
           in: "query",
           description: "Número da página.",
