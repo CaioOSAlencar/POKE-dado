@@ -66,6 +66,39 @@ const usuarioSchema = {
     }
   },
 
+  updateUserBody: {
+    type: "object",
+    properties: {
+      apelido: {
+        type: "string",
+        description: "Novo apelido do usuário.",
+        example: "Misty"
+      },
+      n_sorte: {
+        type: "integer",
+        description: "Novo número da sorte do usuário.",
+        example: 7
+      }
+    },
+    required: []
+  },
+  updateUserRes: {
+    type: "object",
+    example: {
+      error: false,
+      code: 200,
+      message: "Usuário atualizado com sucesso.",
+      data: {
+        _id: "67b76e819684a2194b7749ba",
+        apelido: "Misty",
+        n_sorte: 7,
+        role: "admin",
+        mesa_id: 1,
+        historico_rolls: [1, 2, 3, 4]
+      }
+    }
+  },
+
   erro404usuario: {
     "application/json": {
       schema: {

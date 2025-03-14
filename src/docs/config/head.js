@@ -1,9 +1,11 @@
 //routes
 import authPaths from "../routes/auth.js";
 import userPaths from "../routes/user.js";
+import pokemonPaths from "../routes/pokemon.js";
 //schemas
 import authSchema from "../schemas/loginSchemaDocs.js";
 import userSchema from "../schemas/userSchemaDocs.js";
+import pokemonSchema from "../schemas/pokemonSchemaDocs.js";
 
 // Função para definir as URLs do servidor dependendo do ambiente
 const getServersInCorrectOrder = () => {
@@ -42,6 +44,7 @@ const getSwaggerOptions = () => {
       paths: {
         ...authPaths,
         ...userPaths,
+        ...pokemonPaths, // Add Pokémon routes
       },
       components: {
         securitySchemes: {
@@ -54,6 +57,7 @@ const getSwaggerOptions = () => {
         schemas: {
           ...authSchema,
           ...userSchema,
+          ...pokemonSchema, // Add Pokémon schema
         }
       },
       security: [{

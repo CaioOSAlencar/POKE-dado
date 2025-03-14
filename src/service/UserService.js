@@ -35,6 +35,10 @@ class UserService {
   async deleteUser(apelido) {
     return await this.repository.deleteUser(apelido);
   }
+
+  async updateUser(id, apelido, n_sorte) {
+    return await this.repository.updateUser(id, apelido, n_sorte);
+  }
 }
 
 export default UserService;

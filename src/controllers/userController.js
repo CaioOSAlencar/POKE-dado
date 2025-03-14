@@ -53,6 +53,22 @@ class UserController {
       res.status(400).send({ message: error.message });
     }
   }
+
+  async updateUser(req, res) {
+    try {
+      const { id } = req.params;
+      const { apelido, n_sorte } = req.body;
+
+      if (!id) {
+        return res.status(400).json({ msg: 'ID do usuário é obrigatório' });
+      }
+
+      const updatedUser = await this.service.updateUser(id, apelido, n_sorte);
+      return res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  }
 }
 
 export default UserController;

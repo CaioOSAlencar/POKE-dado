@@ -15,11 +15,6 @@ class UserRepository {
     const apelido = data.query.apelido || null;
     const n_sorte = data.query.n_sorte || null;
     const role = data.query.role || null;
-    console.log('ID:', id);
-    console.log('Apelido:', apelido);
-    console.log('N_sorte:', n_sorte);
-    console.log('Role:', role);
-    console.log('Page:', page);
     
     if (!data) { return null; }
 
@@ -96,6 +91,18 @@ class UserRepository {
       throw new Error('Usuário não encontrado');
     }
     return result;
+  }
+
+  async updateUser(id, apelido, n_sorte) {
+    const updatedFields = {};
+    if (apelido) updatedFields.apelido = apelido;
+    if (n_sorte) updatedFields.n_sorte = n_sorte;
+
+    const updatedUser = await this.model.findByIdAndUpdate(id, updatedFields, { new: true }).exec();
+    if (!updatedUser) {
+      throw new Error('Usuário não encontrado');
+    }
+    return updatedUser;
   }
 }
 
