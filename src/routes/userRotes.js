@@ -9,5 +9,6 @@ router
   .get("/users", userController.get_all_users.bind(userController))
   .post("/user/register", userController.registerUser.bind(userController))
   .delete("/user/delete", userController.deleteUser.bind(userController))
+  .patch("/user/update/:id", userController.updateUser.bind(userController))
 
 export default router;

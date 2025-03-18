@@ -20,7 +20,7 @@ class AuthService {
           errorType: 'notFound',
           field: 'Apelido',
           details: [],
-          customMessage: 'Usuário não encontrado'
+          customMessage: 'Usuário inválido'
         };
       }
 
@@ -34,7 +34,7 @@ class AuthService {
           errorType: 'unauthorized',
           field: 'Senha',
           details: [],
-          customMessage: 'Senha não autorizada'
+          customMessage: 'Senha incorreta'
         };
       }
       // Gerar tokens
@@ -71,7 +71,7 @@ class AuthService {
         statusCode: error.statusCode || 500,
         errorType: error.errorType || 'internalServerError',
         field: error.field || 'Service',
-        details: [error.message],
+        details: [error.customMessage || error.message],
         customMessage: error.customMessage || 'Erro ao realizar login'
       };
     }

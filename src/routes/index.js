@@ -1,7 +1,8 @@
 import express from "express";
 // import swaggerJsDoc from "swagger-jsdoc";
-// import swaggerUI from "swagger-ui-express";
-// import getSwaggerOptions from "../docs/config/head.js";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+import getSwaggerOptions from "../docs/config/head.js";
 // import logRoutes from "../middlewares/LogRoutesMiddleware.js";
 
 import user from './userRotes.js';
@@ -15,10 +16,16 @@ dotenv.config();
 
 // função para configirar as rotas do servidor
 const routes = (app) => {
+  // Configurando a documentação da Swagger UI para ser servida diretamente em '/'
+  const swaggerDocs = swaggerJsDoc(getSwaggerOptions());
+  app.use(swaggerUI.serve);
+  app.get("/", (req, res, next) => {
+    swaggerUI.setup(swaggerDocs)(req, res, next);
+  });
   app.use(express.json(),
-  user,
-  pokemon,
-  authRoute
+    user,
+    pokemon,
+    authRoute
   );
 
   app.use((req, res) => {

@@ -8,8 +8,11 @@ class UserController {
   }
   async get_all_users(req, res) {
     try {
-      const data = await this.service.get_all_users(req);
-
+      const { page = 1 } = req.query;
+      const data = await this.service.get_all_users(req, page);
+      if (!data) {
+        return res.status(404).json({ msg: 'No users found', code: 404 });
+      }
       return res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ msg: error.message });
@@ -18,7 +21,7 @@ class UserController {
 
   async registerUser(req, res) {
     try {
-      const { apelido, senha, n_sorte, role, mesa_id } = req.body;
+      const { apelido, senha, n_sorte, role, mesa_id, historico_rolls } = req.body;
       console.log('Senha recebida:', senha);
       if (!apelido || !senha || !n_sorte) {
         return res.status(400).json({ msg: 'Campos obrigatórios faltando' });
@@ -27,7 +30,7 @@ class UserController {
         return res.status(400).json({ msg: 'A senha deve ter pelo menos 8 caracteres' });
       }
 
-      const data = await this.service.registerUser(apelido, senha, n_sorte, role, mesa_id);
+      const data = await this.service.registerUser(apelido, senha, n_sorte, role, mesa_id, historico_rolls);
       return res.status(201).json(data);
     } catch (error) {
       if (error.code === 11000) {
@@ -48,6 +51,22 @@ class UserController {
       res.status(200).send({ message: 'Usuário deletado com sucesso' });
     } catch (error) {
       res.status(400).send({ message: error.message });
+    }
+  }
+
+  async updateUser(req, res) {
+    try {
+      const { id } = req.params;
+      const { apelido, n_sorte } = req.body;
+
+      if (!id) {
+        return res.status(400).json({ msg: 'ID do usuário é obrigatório' });
+      }
+
+      const updatedUser = await this.service.updateUser(id, apelido, n_sorte);
+      return res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
     }
   }
 }
