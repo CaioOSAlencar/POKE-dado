@@ -12,7 +12,7 @@ const loginRoutes = {
                 apelido: {
                   type: "string",
                   description: "Apelido do usuário.",
-                  example: "Jon Snow"
+                  example: "Caio"
                 },
                 senha: {
                   type: "string",
