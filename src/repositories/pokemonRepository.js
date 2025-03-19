@@ -14,7 +14,7 @@ function sortearRaridade() {
 }
 
 // Função para buscar um Pokémon aleatório baseado na raridade sorteada e verificar se é shiny
-async function getRandomPokemonByRarity(playerId) {
+async function getRandomPokemonByRarity(apelido) {
   try {
     // Sorteia a raridade inicial
     let raridade = sortearRaridade();
@@ -34,7 +34,7 @@ async function getRandomPokemonByRarity(playerId) {
     const randomPokemon = await Pokemon.findOne({ raridade }).skip(randomIndex);
     console.log(`randomPokemon encontrados: ${randomPokemon}`);
     // Busca o número da sorte do jogador
-    const player = await Players.findById(playerId);
+    const player = await Players.findOne({apelido});
     console.log(`player encontrados: ${player}`);
     
     

@@ -3,11 +3,17 @@ const usuarioSchema = {
   createUserBody: {
     type: "object",
     example: {
-      nome: "João",
-      matricula: "123456",
-      active: true,
-      senha: "123456",
-      grupo_id: 1
+      apelido: "Jon Snow",
+      senha: "Testando-123",
+      n_sorte: 42,
+      role_id: "player",
+      mesa_id: null,
+      historico_rolls: [
+        1,
+        2,
+        3,
+        4
+      ]
     }
   },
 
@@ -16,18 +22,23 @@ const usuarioSchema = {
     example: {
       error: false,
       code: 201,
-      message: "Requisição bem sucedida.",
-      errors: [],
+      message: "Usuário registrado com sucesso.",
       data: {
-        id: 1,
-        nome: "João",
-        matricula: "123456",
-        active: true,
-        grupo_id: 1
+        _id: "67b76e819684a2194b7749ba",
+        apelido: "AshKetchum",
+        n_sorte: 42,
+        role_id: "admin",
+        mesa_id: null,
+        historico_rolls: [
+          1,
+          2,
+          3,
+          4
+        ]
       }
-    }
-  },
 
+    },
+  },
   get_user: {
     type: "object",
     example: {
@@ -128,6 +139,6 @@ const usuarioSchema = {
       }
     }
   },
-};
+}
 
 export default usuarioSchema;

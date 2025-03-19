@@ -5,7 +5,7 @@ import pokemonService from '../service/pokemonService.js';
 async function getRandomPokemon(req, res) {
   try {
 
-    const query = req.query.playerId || {};
+    const query = req.query.apelido || {};
     console.log('body', query);
     // Chama o serviço para obter o Pokémon aleatório
     const randomPokemon = await pokemonService.getRandomPokemonByRarity(query);

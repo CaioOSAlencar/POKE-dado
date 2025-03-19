@@ -1,5 +1,5 @@
 const usuarioRoutes = {
-  "/users": {
+  "/user": {
     get: {
       tags: ["Usuários"],
       summary: "Lista todos os usuários",
@@ -32,7 +32,7 @@ const usuarioRoutes = {
           }
         },
         {
-          name: "role",
+          name: "role_id",
           in: "query",
           description: "Categoria do usuário.",
           schema: {
@@ -89,19 +89,19 @@ const usuarioRoutes = {
                 apelido: {
                   type: "string",
                   description: "Apelido do usuário.",
-                  example: "AshKetchum"
+                  example: "Jon Snow"
                 },
                 senha: {
                   type: "string",
                   description: "Senha do usuário.",
-                  example: "mypassword123"
+                  example: "Testando-123"
                 },
                 n_sorte: {
                   type: "integer",
                   description: "Número da sorte do usuário.",
                   example: 42
                 },
-                role: {
+                role_id: {
                   type: "string",
                   description: "Função do usuário.",
                   example: "admin"
@@ -109,7 +109,7 @@ const usuarioRoutes = {
                 mesa_id: {
                   type: "integer",
                   description: "ID da mesa associada ao usuário.",
-                  example: 1
+                  example: null
                 },
                 historico_rolls: {
                   type: "array",
@@ -141,8 +141,8 @@ const usuarioRoutes = {
                     _id: "67b76e819684a2194b7749ba",
                     apelido: "AshKetchum",
                     n_sorte: 42,
-                    role: "admin",
-                    mesa_id: 1,
+                    role_id: "admin",
+                    mesa_id: null,
                     historico_rolls: [1, 2, 3, 4]
                   }
                 }
@@ -308,8 +308,8 @@ const usuarioRoutes = {
                     _id: "67b76e819684a2194b7749ba",
                     apelido: "Misty",
                     n_sorte: 7,
-                    role: "admin",
-                    mesa_id: 1,
+                    role_id: "admin",
+                    mesa_id: null,
                     historico_rolls: [1, 2, 3, 4]
                   }
                 }

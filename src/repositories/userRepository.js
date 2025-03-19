@@ -14,7 +14,7 @@ class UserRepository {
     const id = data.params.id || null;
     const apelido = data.query.apelido || null;
     const n_sorte = data.query.n_sorte || null;
-    const role = data.query.role || null;
+    const role_id = data.query.role_id || null;
     
     if (!data) { return null; }
 
@@ -33,8 +33,8 @@ class UserRepository {
       const user = await this.model.find({ n_sorte }).select(selectFields);
       return user || null;
     }
-    if (role) {
-      const user = await this.model.find({ role }).select(selectFields);
+    if (role_id) {
+      const user = await this.model.find({ role_id }).select(selectFields);
       return user || null;
     }
 
@@ -103,6 +103,15 @@ class UserRepository {
       throw new Error('Usuário não encontrado');
     }
     return updatedUser;
+  }
+
+  static async get_users_with_apelido({ query }) {
+    try {
+      return await UserModel.findOne(query).select('role_id apelido'); // Usar UserModel diretamente
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      throw error;
+    }
   }
 }
 
