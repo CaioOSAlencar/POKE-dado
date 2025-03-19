@@ -33,8 +33,10 @@ class UserController {
       const data = await this.service.registerUser(apelido, senha, n_sorte, role_id, mesa_id, historico_rolls);
       return res.status(201).json(data);
     } catch (error) {
+      if (error.message === 'Já existe um usuário com este apelido.') {
+        return res.status(400).json({ msg: error.message });
+      }
       if (error.code === 11000) {
-        // Código de erro para chave duplicada no MongoDB
         return res.status(400).json({ msg: 'Já existe um usuário com este apelido.' });
       }
       res.status(500).json({ msg: error.message });

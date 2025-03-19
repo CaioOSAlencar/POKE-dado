@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const rotaSchema = new mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  _id: { type: mongoose.Schema.Types.ObjectId, auto: false, required: true },
   rota: { type: String, required: true }, // Exemplo: '/pokemon', '/users'
 }, {
   timestamps: false, // Remove os campos createdAt e updatedAt
   versionKey: false // Remove o campo __v
 });
 
-export default mongoose.model('Rota', rotaSchema);
+export default mongoose.model('rotas', rotaSchema);
