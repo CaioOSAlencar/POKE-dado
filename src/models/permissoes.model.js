@@ -10,4 +10,4 @@ const permissoesSchema = new mongoose.Schema({
   versionKey: false // Remove o campo __v
 });
 
-export default mongoose.model('Permissao', permissoesSchema);
+export default mongoose.model('permissoes', permissoesSchema);

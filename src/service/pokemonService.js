@@ -2,10 +2,10 @@
 import pokemonRepository from '../repositories/pokemonRepository.js';
 
 // Função para buscar um Pokémon aleatório com base em raridade
-async function getRandomPokemonByRarity(playerId) {
+async function getRandomPokemonByRarity(apelido) {
   try {
     // Chama o repository para obter o Pokémon aleatório
-    const randomPokemon = await pokemonRepository.getRandomPokemonByRarity(playerId);
+    const randomPokemon = await pokemonRepository.getRandomPokemonByRarity(apelido);
     return randomPokemon;
   } catch (error) {
     console.error('Erro no Service:', error.message);

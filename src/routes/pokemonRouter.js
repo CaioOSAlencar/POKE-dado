@@ -1,5 +1,6 @@
 import express from "express";
 import pokemonController from "../controllers/pokemonController.js";
+import AuthMiddleware from '../middlewares/authMiddleware.js';
 
 // cria uma roteador do Express
 const router = express.Router();

@@ -6,12 +6,12 @@ const pokemonRoutes = {
       security: [{ bearerAuth: [] }],
       parameters: [
         {
-          name: "playerId",
+          name: "apelido",
           in: "query",
           description: "Identificador do jogador.",
           schema: {
             type: "string",
-            example: "67b76e819684a2194b7749ba"
+            example: "Thalysson"
           }
         }
       ],

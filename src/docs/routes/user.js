@@ -1,5 +1,5 @@
 const usuarioRoutes = {
-  "/users": {
+  "/user": {
     get: {
       tags: ["Usuários"],
       summary: "Lista todos os usuários",

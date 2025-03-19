@@ -104,6 +104,15 @@ class UserRepository {
     }
     return updatedUser;
   }
+
+  static async get_users_with_apelido({ query }) {
+    try {
+      return await UserModel.findOne(query).select('role_id apelido'); // Usar UserModel diretamente
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      throw error;
+    }
+  }
 }
 
 export default UserRepository;
