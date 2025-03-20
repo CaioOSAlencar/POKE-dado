@@ -23,7 +23,7 @@ async function getRandomPokemonByRarity(apelido) {
     // Busca a quantidade total de Pokémon da raridade sorteada
     const totalPokemon = await Pokemon.countDocuments({ raridade });
     console.log(`Total de Pokémon encontrados: ${totalPokemon}`);
-    
+
     if (totalPokemon === 0) {
       throw new Error(`Nenhum Pokémon encontrado para a raridade: ${raridade}`);
     }
@@ -34,22 +34,29 @@ async function getRandomPokemonByRarity(apelido) {
     const randomPokemon = await Pokemon.findOne({ raridade }).skip(randomIndex);
     console.log(`randomPokemon encontrados: ${randomPokemon}`);
     // Busca o número da sorte do jogador
-    const player = await Players.findOne({apelido});
-    console.log(`player encontrados: ${player}`);
-    
-    
-    if (!player) {
-      throw new Error('Jogador não encontrado');
+    if (!apelido) {
+      const n_sorte = 1;
+
+      const numeroSorteado = Math.floor(Math.random() * 100) + 1;
+      const isShiny = numeroSorteado === n_sorte;
+
+      console.log(`Número sorteado: ${numeroSorteado} | Número da sorte do jogador: ${n_sorte} | Shiny: ${isShiny}`);
+
+      // Retorna o Pokémon com o status de shiny
+      return { ...randomPokemon.toObject(), shiny: isShiny };
+    }else{
+      const player = await Players.findOne({ apelido });
+      console.log(`player encontrados: ${player}`);
+  
+      // Sorteia um número de 1 a 100 para determinar se o Pokémon é shiny
+      const numeroSorteado = Math.floor(Math.random() * 100) + 1;
+      const isShiny = numeroSorteado === player.n_sorte;
+  
+      console.log(`Número sorteado: ${numeroSorteado} | Número da sorte do jogador: ${player.n_sorte} | Shiny: ${isShiny}`);
+  
+      // Retorna o Pokémon com o status de shiny
+      return { ...randomPokemon.toObject(), shiny: isShiny };
     }
-
-    // Sorteia um número de 1 a 100 para determinar se o Pokémon é shiny
-    const numeroSorteado = Math.floor(Math.random() * 100) + 1;
-    const isShiny = numeroSorteado === player.n_sorte;
-
-    console.log(`Número sorteado: ${numeroSorteado} | Número da sorte do jogador: ${player.n_sorte} | Shiny: ${isShiny}`);
-    
-    // Retorna o Pokémon com o status de shiny
-    return { ...randomPokemon.toObject(), shiny: isShiny };
   } catch (error) {
     console.error('Erro no Repository:', error.message);
     throw error;
