@@ -1,6 +1,6 @@
 /**
  * npx seed -u 'url-do-banco' ./src/database/seeders --> Apenas cria os dados
- * npx seed -u 'url-do-banco' --drop-database/seeders ./src/database/seeders --> APAGA TODAS AS TABELAS E FODA-SE KAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAK
+ * npx seed -u 'url-do-banco' --drop-database ./src/database/seeders --> APAGA TODAS AS TABELAS E FODA-SE KAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAKKAAKKAKAKAAKAKAKAKKAKAAKAKAAKAKAKAKAK
  */
 
 module.exports = [
@@ -23,25 +23,32 @@ module.exports = [
 {
   nome: 'Charmander',
   tipo_primario: "Fogo",
-  tipo_secundario: "",
+  tipo_secundario: "trovão",
   img:"https://img.pokemondb.net/artwork/charmander.jpg",
-  raridade: "comum", 
+  raridade: "incomum", 
   shiny: false,
 },
 {
   nome: 'Squirtle',
   tipo_primario: "Água",
-  tipo_secundario: "",
+  tipo_secundario: "Lava",
   img:"https://img.pokemondb.net/artwork/squirtle.jpg",
-  raridade: "comum", 
+  raridade: "raro", 
   shiny: false,
 },
 {
   nome: 'Bulbasaur',
   tipo_primario: "Planta",
-  tipo_secundario: "",
+  tipo_secundario: "Pedra",
   img:"https://img.pokemondb.net/artwork/bulbasaur.jpg",
-  raridade: "comum", 
+  raridade: "muito raro", 
+  shiny: false,
+},
+{
+  nome: 'Caterpie',
+  tipo_primario: "Inseto",
+  tipo_secundario: "Demoníaco",
+  raridade: "místico", 
   shiny: false,
 },
 ];
