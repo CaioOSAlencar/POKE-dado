@@ -9,14 +9,14 @@ class AuthPermission {
       const { apelido } = req.user; // Supondo que o AuthMiddleware adiciona o usuário ao req
       const { role_id } = await UserRepository.get_users_with_apelido({ query: { apelido } }); // Busca o role_id do usuário
       const currentRoute = req.baseUrl + req.route.path; // Rota atual
-      const currentMethod = req.method; // Método HTTP atual
+      const currentMethod = req.method.toUpperCase(); // Normalize method to uppercase
 
       console.log('Role ID do usuário:', apelido, role_id);
       console.log('Rota atual:', currentRoute);
       console.log('Método atual:', currentMethod);
 
       // Buscar a rota no banco
-      const rota = await Rota.findOne({ rota: currentRoute });
+      const rota = await Rota.findOne({ rota: { $in: [currentRoute] } }); // Verifica se a rota atual está na lista de rotas
       if (!rota) {
         console.error('Rota não encontrada:', currentRoute);
         return res.status(403).json({ msg: 'Rota não encontrada nas permissões.' });
@@ -27,7 +27,7 @@ class AuthPermission {
       const Permissoes = await permissoes.findOne({
         role_id: new mongoose.Types.ObjectId(role_id), // Certifique-se de que o role_id é um ObjectId
         rota_id: rota._id,
-        metodos: currentMethod,
+        metodo: { $in: [currentMethod] }, // Verifica se o método atual está na lista de métodos permitidos
       });
 
       if (!Permissoes) {

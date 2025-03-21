@@ -1,5 +1,5 @@
 import UserModel from '../models/user.model.js';
-
+import mongoose from 'mongoose';
 class UserRepository {
   constructor({
     userModel = UserModel,
@@ -15,7 +15,7 @@ class UserRepository {
     const apelido = data.query.apelido || null;
     const n_sorte = data.query.n_sorte || null;
     const role_id = data.query.role_id || null;
-    
+
     if (!data) { return null; }
 
     const selectFields = '_id apelido n_sorte role mesa_id historico_rolls';
@@ -34,7 +34,13 @@ class UserRepository {
       return user || null;
     }
     if (role_id) {
-      const user = await this.model.find({ role_id }).select(selectFields);
+      const roleMapping = {
+        admin: new mongoose.Types.ObjectId('64b7f8e2f2a4b5d6c7e8f9a0'),
+        player: new mongoose.Types.ObjectId('64b7f8e2f2a4b5d6c7e8f9a1'),
+        mestre: new mongoose.Types.ObjectId('64b7f8e2f2a4b5d6c7e8f9a2'),
+      };
+      const roleId = roleMapping[role_id] || null;
+      const user = await this.model.find({ role_id:roleId }).select(selectFields);
       return user || null;
     }
 
@@ -103,6 +109,10 @@ class UserRepository {
       throw new Error('Usuário não encontrado');
     }
     return updatedUser;
+  }
+
+  async findUserByApelido(apelido) {
+    return await this.model.findOne({ apelido });
   }
 
   static async get_users_with_apelido({ query }) {

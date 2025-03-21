@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const roleSchema = new mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  _id: { type: mongoose.Schema.Types.ObjectId, auto: false, required: true },
   nome: { type: String, required: true }, // Exemplo: 'admin', 'player', 'mestre'
 }, {
   timestamps: false, // Remove os campos createdAt e updatedAt
